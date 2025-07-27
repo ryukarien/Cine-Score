@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cine/score - About Us</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800&family=IBM+Plex+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        /* CSS Variables for better maintainability and consistency */
+        :root {
+            /* Colors */
+            --color-primary-dark: #000000;
+            --color-secondary-dark: #1a1a1a;
+            --color-text-light: #ffffff;
+            --color-text-dark: #222222;
+            --color-text-muted: #555555;
+            --color-background-light: #f8f8f8;
+            --color-card-background: #ffffff;
+            --color-border-light: rgba(255, 255, 255, 0.3);
+            --color-border-dark: rgba(0, 0, 0, 0.1);
+
+            /* Fonts */
+            --font-family-heading: 'Montserrat', sans-serif;
+            --font-family-body: 'IBM Plex Sans', sans-serif;
+
+            /* Spacing */
+            --spacing-xs: 0.5rem;   /* 8px */
+            --spacing-sm: 1rem;     /* 16px */
+            --spacing-md: 1.5rem;   /* 24px */
+            --spacing-lg: 2rem;     /* 32px */
+            --spacing-xl: 3rem;     /* 48px */
+            --spacing-xxl: 5rem;    /* 80px */
+
+            /* Border Radius */
+            --border-radius-sm: 4px;
+            --border-radius-md: 10px;
+
+            /* Shadows */
+            --shadow-sm: 0 4px 10px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 8px 20px rgba(0, 0, 0, 0.08);
+            --shadow-lg: 0 12px 30px rgba(0, 0, 0, 0.15);
+            --text-shadow-subtle: 2px 2px 8px rgba(0, 0, 0, 0.6);
+        }
+
+        /* Basic Reset & Base Styles */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-family-body);
+            line-height: 1.6;
+            color: var(--color-text-dark);
+            background-color: var(--color-background-light);
+            -webkit-font-smoothing: antialiased; /* Smoother font rendering */
+            -moz-osx-font-smoothing: grayscale; /* Smoother font rendering */
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+            outline: none; /* Remove default outline, will add custom focus */
+        }
+
+        a:focus-visible {
+            outline: 2px solid var(--color-text-light); /* Custom focus outline for accessibility */
+            outline-offset: 3px;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block; /* Remove extra space below images */
+        }
+
+        /* Container for content within sections to maintain max-width */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 var(--spacing-lg); /* Using variable for horizontal padding */
+        }
+
+        /* Header */
+        header {
+            background-color: var(--color-primary-dark);
+            color: var(--color-text-light);
+            padding: var(--spacing-md) var(--spacing-lg); /* Using variables */
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-logo {
+            font-family: var(--font-family-heading);
+            font-weight: 800;
+            font-size: 1.3em;
+            letter-spacing: -0.02em;
+        }
+
+        .header-nav ul {
+            list-style: none;
+            display: flex;
+            gap: var(--spacing-lg); /* Using variable */
+        }
+
+        .header-nav a {
+            font-size: 0.95em;
+            opacity: 0.85;
+            transition: opacity 0.3s ease, color 0.3s ease, text-decoration 0.3s ease;
+        }
+
+        .header-nav a:hover,
+        .header-nav a:focus-visible {
+            opacity: 1;
+            color: var(--color-text-light);
+            text-decoration: underline;
+            text-underline-offset: 4px;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--color-primary-dark);
+            color: var(--color-text-light);
+            padding: var(--spacing-xxl) 0; /* Using variable */
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .footer-logo {
+            font-family: var(--font-family-heading);
+            font-weight: 800;
+            font-size: 1.8rem; /* Scaled with rem */
+            margin-bottom: var(--spacing-md); /* Using variable */
+            opacity: 0.95;
+            letter-spacing: -0.02em;
+        }
+
+        .footer-description {
+            font-size: 0.95rem; /* Scaled with rem */
+            line-height: 1.7;
+            opacity: 0.8;
+            margin-bottom: var(--spacing-xl); /* Using variable */
+        }
+
+        .footer-links ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: var(--spacing-xl); /* Using variable */
+            margin-bottom: var(--spacing-md); /* Using variable */
+        }
+
+        .footer-links a {
+            opacity: 0.8;
+            transition: opacity 0.3s ease, color 0.3s ease;
+            font-family: var(--font-family-body);
+        }
+
+        .footer-links a:hover,
+        .footer-links a:focus-visible {
+            opacity: 1;
+            color: var(--color-text-light);
+        }
+
+        .footer-copyright {
+            font-size: 0.8rem; /* Scaled with rem */
+            opacity: 0.6;
+        }
+
+        /* Responsive Adjustments for Header/Footer (copied from your main HTML) */
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                gap: var(--spacing-sm);
+                padding-bottom: var(--spacing-sm);
+            }
+            .header-nav ul {
+                justify-content: center;
+                width: 100%;
+                gap: var(--spacing-md);
+            }
+            .footer-links ul {
+                flex-direction: column;
+                gap: var(--spacing-md);
+            }
+        }
+
+        /* Specific styles for the about page */
+        .about-section {
+            padding-top: var(--spacing-xxl); /* Keep top padding for spacing from header */
+            padding-bottom: var(--spacing-xl); /* Reduced bottom padding */
+            text-align: center;
+        }
+
+        .about-section h1 {
+            font-family: var(--font-family-heading);
+            font-weight: 800;
+            font-size: 3.5rem;
+            color: var(--color-secondary-dark);
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .about-section p {
+            max-width: 800px;
+            margin: 0 auto var(--spacing-md) auto;
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--color-text-muted);
+        }
+
+        /* New styles for the reference section */
+        .reference-section {
+            padding-top: var(--spacing-xl); /* Reduced top padding */
+            padding-bottom: var(--spacing-xxl); /* Keep bottom padding for spacing from footer */
+            background-color: var(--color-background-light);
+            text-align: center;
+        }
+
+        .reference-section .section-title {
+            font-family: var(--font-family-heading);
+            font-weight: 800;
+            font-size: 2.8rem;
+            color: var(--color-secondary-dark);
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .reference-grid {
+            display: flex; /* Changed to flexbox for single item centering */
+            justify-content: center; /* Center the single item */
+            gap: var(--spacing-lg);
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .reference-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: var(--color-card-background);
+            border-radius: var(--border-radius-md);
+            padding: var(--spacing-md);
+            box-shadow: var(--shadow-sm);
+            text-align: center;
+            width: fit-content; /* Adjust width to content */
+        }
+
+        .reference-item img {
+            width: 100px; /* Small fixed size for reference images */
+            height: 100px;
+            object-fit: cover;
+            border-radius: var(--border-radius-sm);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .reference-item-caption {
+            font-size: 0.9rem;
+            color: var(--color-text-muted);
+            line-height: 1.4;
+        }
+
+
+        @media (max-width: 768px) {
+            .about-section h1 {
+                font-size: 2.5rem;
+            }
+            .about-section p {
+                font-size: 1rem;
+                padding: 0 var(--spacing-md);
+            }
+            .reference-section .section-title {
+                font-size: 2rem;
+            }
+            .reference-grid {
+                /* No change needed, flexbox will handle single item centering */
+                padding: 0 var(--spacing-md);
+            }
+            .reference-item img {
+                width: 80px;
+                height: 80px;
+            }
+            .reference-item-caption {
+                font-size: 0.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-logo">Cine/score</div>
+        <nav class="header-nav" aria-label="Main Navigation">
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="index.html">Reviews</a></li>
+                <li><a href="about.html">About</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="about-section">
+            <div class="container">
+                <h1>About Cine/score</h1>
+                <p>Welcome to Cine/score, your dedicated platform for concise and insightful film reviews. We believe that great cinema deserves clear, focused commentary, free from unnecessary jargon or excessive length. Our mission is to provide film enthusiasts with engaging, easy-to-digest reviews that highlight the core essence of each movie.</p>
+                <p>At Cine/score, we're passionate about film and committed to delivering honest, objective analyses. Whether you're deciding what to watch next or looking for a deeper understanding of a recent release, we're here to guide your cinematic journey. We score each film with intent, offering a quick yet comprehensive overview to help you make informed choices.</p>
+                <p>Join us in celebrating the art of film, one thoughtful review at a time. Thank you for being a part of the Cine/score community.</p>
+            </div>
+        </section>
+
+        <section class="reference-section">
+            <div class="container">
+                <h2 class="section-title">References</h2>
+                <div class="reference-grid">
+                    <div class="reference-item">
+                        <img src="poster/qr-code.png" alt="Image representing Cine/score's core values or inspiration">
+                        <p class="reference-item-caption">Our core design and content philosophy is rooted in delivering clear, concise, and impactful film analysis.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-logo">Cine/score</div>
+            <p class="footer-description">Cine/score is a curated space for film reviews, clean, scored, and focused on what matters most: the movie.</p>
+            <div class="footer-links">
+                <ul>
+                    <li><a href="index.html">Reviews</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="#">Contact</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                </ul>
+            </div>
+            <div class="footer-copyright">&copy; 2025 Cine/score. All rights reserved.</div>
+        </div>
+    </footer>
+
+</body>
+</html>

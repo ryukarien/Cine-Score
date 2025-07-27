@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cine/score - Film Reviews</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800&family=IBM+Plex+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        /* CSS Variables for better maintainability and consistency */
+        :root {
+            /* Colors */
+            --color-primary-dark: #000000;
+            --color-secondary-dark: #1a1a1a;
+            --color-text-light: #ffffff;
+            --color-text-dark: #222222;
+            --color-text-muted: #555555;
+            --color-background-light: #f8f8f8;
+            --color-card-background: #ffffff;
+            --color-border-light: rgba(255, 255, 255, 0.3);
+            --color-border-dark: rgba(0, 0, 0, 0.1);
+
+            /* Fonts */
+            --font-family-heading: 'Montserrat', sans-serif;
+            --font-family-body: 'IBM Plex Sans', sans-serif;
+
+            /* Spacing */
+            --spacing-xs: 0.5rem;   /* 8px */
+            --spacing-sm: 1rem;     /* 16px */
+            --spacing-md: 1.5rem;   /* 24px */
+            --spacing-lg: 2rem;     /* 32px */
+            --spacing-xl: 3rem;     /* 48px */
+            --spacing-xxl: 5rem;    /* 80px */
+
+            /* Border Radius */
+            --border-radius-sm: 4px;
+            --border-radius-md: 10px;
+
+            /* Shadows */
+            --shadow-sm: 0 4px 10px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 8px 20px rgba(0, 0, 0, 0.08);
+            --shadow-lg: 0 12px 30px rgba(0, 0, 0, 0.15);
+            --text-shadow-subtle: 2px 2px 8px rgba(0, 0, 0, 0.6);
+        }
+
+        /* Basic Reset & Base Styles */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth; /* Smooth scrolling for anchor links */
+        }
+
+        body {
+            font-family: var(--font-family-body);
+            line-height: 1.6;
+            color: var(--color-text-dark);
+            background-color: var(--color-background-light);
+            -webkit-font-smoothing: antialiased; /* Smoother font rendering */
+            -moz-osx-font-smoothing: grayscale; /* Smoother font rendering */
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+            outline: none; /* Remove default outline, will add custom focus */
+        }
+
+        a:focus-visible {
+            outline: 2px solid var(--color-text-light); /* Custom focus outline for accessibility */
+            outline-offset: 3px;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block; /* Remove extra space below images */
+        }
+
+        /* Container for content within sections to maintain max-width */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 var(--spacing-lg); /* Using variable for horizontal padding */
+        }
+
+        /* Header */
+        header {
+            background-color: var(--color-primary-dark);
+            color: var(--color-text-light);
+            padding: var(--spacing-md) var(--spacing-lg); /* Using variables */
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-logo {
+            font-family: var(--font-family-heading);
+            font-weight: 800;
+            font-size: 1.3em;
+            letter-spacing: -0.02em;
+        }
+
+        .header-nav ul {
+            list-style: none;
+            display: flex;
+            gap: var(--spacing-lg); /* Using variable */
+        }
+
+        .header-nav a {
+            font-size: 0.95em;
+            opacity: 0.85;
+            transition: opacity 0.3s ease, color 0.3s ease, text-decoration 0.3s ease;
+        }
+
+        .header-nav a:hover,
+        .header-nav a:focus-visible {
+            opacity: 1;
+            color: var(--color-text-light);
+            text-decoration: underline;
+            text-underline-offset: 4px;
+        }
+
+        /* Hero Section - The main visual impact area */
+        .hero {
+            position: relative;
+            background-image: url('poster/cinema.png'); /* Your specified background image */
+            background-size: cover;
+            background-position: center;
+            height: 650px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            color: var(--color-text-light);
+            padding-bottom: var(--spacing-xxl); /* Using variable */
+            overflow: hidden;
+            text-align: left; /* Ensure text alignment */
+        }
+
+        /* Overlay for Hero Section - enhances text readability and adds subtle blur */
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            /* Stronger gradient from bottom for depth */
+            background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 50%, rgba(0,0,0,0.6) 100%);
+            -webkit-backdrop-filter: blur(3px); /* For Safari */
+            backdrop-filter: blur(3px); /* Subtle blur behind content */
+            z-index: 0;
+        }
+
+        .hero .container {
+            z-index: 1; /* Ensure content is above overlay */
+            padding-bottom: 0; /* Override container's default */
+        }
+
+        /* Hero Content Area - holds all text elements */
+        .hero-content {
+            max-width: 950px;
+            position: relative;
+            z-index: 1;
+            padding: var(--spacing-sm); /* Small internal padding for the content block */
+        }
+
+        .hero-title-group,
+        .hero-subheading,
+        .hero-description {
+            position: relative;
+            z-index: 1;
+            text-shadow: var(--text-shadow-subtle); /* Using variable */
+        }
+
+        .hero-title-group {
+            display: flex;
+            align-items: flex-start;
+            gap: var(--spacing-xl); /* Using variable */
+            margin-bottom: var(--spacing-lg); /* Using variable */
+            flex-wrap: wrap;
+        }
+
+        .hero-main-title {
+            font-family: var(--font-family-heading);
+            font-weight: 800;
+            font-size: 6rem; /* Scaled with rem for responsiveness */
+            line-height: 0.9;
+            white-space: nowrap;
+            letter-spacing: -0.03em;
+        }
+
+        .hero-tagline {
+            font-family: var(--font-family-heading);
+            font-weight: 700;
+            font-size: 1.7rem; /* Scaled with rem */
+            line-height: 1.3;
+            align-self: flex-end;
+            padding-bottom: 8px;
+        }
+
+        .hero-subheading {
+            font-family: var(--font-family-heading);
+            font-weight: 700;
+            font-size: 2.4rem; /* Scaled with rem */
+            margin-top: -15px;
+            margin-bottom: var(--spacing-xl); /* Using variable */
+            white-space: nowrap;
+            letter-spacing: -0.01em;
+        }
+
+        .hero-description {
+            font-size: 1.05rem; /* Scaled with rem */
+            opacity: 0.9;
+            line-height: 1.7;
+            max-width: 600px;
+            margin-top: var(--spacing-lg); /* Using variable */
+            border-top: 1px solid var(--color-border-light); /* Using variable */
+            padding-top: var(--spacing-lg); /* Using variable */
+        }
+
+        /* Reviews Section - Content area for review cards */
+        .reviews-section {
+            padding: var(--spacing-xxl) 0; /* Using variable */
+            background-color: var(--color-background-light);
+        }
+
+        .reviews-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: var(--spacing-xxl); /* Using variable */
+            flex-wrap: wrap; /* Allow wrapping on smaller screens */
+            gap: var(--spacing-md); /* Gap for wrapped items */
+        }
+
+        .reviews-title {
+            font-family: var(--font-family-heading);
+            font-weight: 800;
+            font-size: 3.5rem; /* Scaled with rem */
+            color: var(--color-secondary-dark);
+            letter-spacing: -0.03em;
+        }
+
+        .reviews-subtitle {
+            max-width: 350px;
+            font-size: 0.95rem; /* Scaled with rem */
+            line-height: 1.6;
+            color: var(--color-text-muted);
+            text-align: right;
+        }
+
+        .review-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+            gap: var(--spacing-xl); /* Using variable */
+        }
+
+        /* Individual Review Card styling */
+        .review-card {
+            background-color: var(--color-card-background);
+            border-radius: var(--border-radius-md); /* Using variable */
+            overflow: hidden;
+            box-shadow: var(--shadow-md); /* Using variable */
+            transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            position: relative; /* For potential future overlays/details */
+        }
+
+        .review-card:hover,
+        .review-card:focus-visible {
+            transform: translateY(-8px); /* More pronounced lift */
+            box-shadow: var(--shadow-lg); /* Stronger shadow on hover */
+            outline: none; /* Remove default outline for a clean look */
+        }
+
+        .review-card:focus-visible {
+            outline: 2px solid var(--color-text-dark); /* Custom focus for accessibility */
+            outline-offset: 4px;
+        }
+
+        .review-card img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .review-card-content {
+            padding: var(--spacing-md); /* Using variable */
+        }
+
+        .review-card-title {
+            font-family: var(--font-family-heading);
+            font-weight: 700;
+            font-size: 1.3rem; /* Scaled with rem */
+            margin-bottom: var(--spacing-xs); /* Using variable */
+            color: var(--color-secondary-dark);
+        }
+
+        .review-card-meta {
+            font-size: 0.85rem; /* Scaled with rem */
+            color: var(--color-text-muted);
+            margin-bottom: var(--spacing-md); /* Using variable */
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--color-primary-dark);
+            color: var(--color-text-light);
+            padding: var(--spacing-xxl) 0; /* Using variable */
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .footer-logo {
+            font-family: var(--font-family-heading);
+            font-weight: 800;
+            font-size: 1.8rem; /* Scaled with rem */
+            margin-bottom: var(--spacing-md); /* Using variable */
+            opacity: 0.95;
+            letter-spacing: -0.02em;
+        }
+
+        .footer-description {
+            font-size: 0.95rem; /* Scaled with rem */
+            line-height: 1.7;
+            opacity: 0.8;
+            margin-bottom: var(--spacing-xl); /* Using variable */
+        }
+
+        .footer-links ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: var(--spacing-xl); /* Using variable */
+            margin-bottom: var(--spacing-md); /* Using variable */
+        }
+
+        .footer-links a {
+            opacity: 0.8;
+            transition: opacity 0.3s ease, color 0.3s ease;
+            font-family: var(--font-family-body);
+        }
+
+        .footer-links a:hover,
+        .footer-links a:focus-visible {
+            opacity: 1;
+            color: var(--color-text-light);
+        }
+
+        .footer-copyright {
+            font-size: 0.8rem; /* Scaled with rem */
+            opacity: 0.6;
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 1024px) {
+            .hero {
+                height: 600px;
+                padding-bottom: var(--spacing-xl);
+            }
+            .hero-main-title {
+                font-size: 5rem;
+            }
+            .hero-tagline {
+                font-size: 1.5rem;
+            }
+            .hero-subheading {
+                font-size: 2rem;
+            }
+            .reviews-title {
+                font-size: 3rem;
+            }
+            .reviews-section {
+                padding: var(--spacing-xxl) 0;
+            }
+            .reviews-header {
+                margin-bottom: var(--spacing-xl);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 var(--spacing-md);
+            }
+            header {
+                flex-direction: column;
+                gap: var(--spacing-sm);
+                padding-bottom: var(--spacing-sm);
+            }
+            .header-nav ul {
+                justify-content: center;
+                width: 100%;
+                gap: var(--spacing-md);
+            }
+
+            .hero {
+                height: 500px;
+                padding-bottom: var(--spacing-lg);
+            }
+            .hero-title-group {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: var(--spacing-sm);
+            }
+            .hero-main-title {
+                font-size: 3.5rem;
+                white-space: normal;
+            }
+            .hero-tagline {
+                font-size: 1.2rem;
+                align-self: flex-start;
+                padding-bottom: 0;
+            }
+            .hero-subheading {
+                font-size: 1.5rem;
+                margin-bottom: var(--spacing-md);
+                white-space: normal;
+            }
+            .hero-description {
+                font-size: 0.95rem;
+                max-width: 100%;
+                padding-top: var(--spacing-md);
+            }
+
+            .reviews-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: var(--spacing-md);
+                margin-bottom: var(--spacing-lg);
+            }
+            .reviews-title {
+                font-size: 2.5rem;
+            }
+            .reviews-subtitle {
+                max-width: 100%;
+                text-align: left;
+                font-size: 0.9rem;
+            }
+            .review-grid {
+                grid-template-columns: 1fr;
+                gap: var(--spacing-lg);
+            }
+            .review-card img {
+                height: 240px;
+            }
+            .footer-links ul {
+                flex-direction: column;
+                gap: var(--spacing-md);
+            }
+            footer {
+                padding: var(--spacing-xl) 0;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero {
+                height: 400px;
+                padding-bottom: var(--spacing-md);
+            }
+            .hero-main-title {
+                font-size: 2.5rem;
+            }
+            .hero-tagline {
+                font-size: 1rem;
+            }
+            .hero-subheading {
+                font-size: 1.2rem;
+                margin-bottom: var(--spacing-sm);
+            }
+            .hero-description {
+                padding-top: var(--spacing-md);
+                font-size: 0.85rem;
+            }
+            .reviews-section {
+                padding: var(--spacing-xl) 0;
+            }
+            .reviews-title {
+                font-size: 2rem;
+            }
+            .reviews-subtitle {
+                font-size: 0.8rem;
+            }
+            .review-card img {
+                height: 180px;
+            }
+            footer {
+                padding: var(--spacing-lg) 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-logo">Cine/score</div>
+        <nav class="header-nav" aria-label="Main Navigation">
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="#reviews-section">Reviews</a></li>
+                <li><a href="about.html">About</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero" aria-labelledby="hero-main-title">
+            <div class="container">
+                <div class="hero-content">
+                    <div class="hero-title-group">
+                        <div class="hero-main-title" id="hero-main-title">Cine/score</div>
+                        <div class="hero-tagline">Curated film reviews.<br>Scored. No noise.</div>
+                    </div>
+                    <div class="hero-subheading">Film Reviews</div>
+                    <p class="hero-description">A streamlined space for film lovers. Thoughtful reviews, scored with intent.<br>No fluff — just cinema.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="reviews-section" id="reviews-section" aria-labelledby="reviews-title">
+            <div class="container">
+                <div class="reviews-header">
+                    <h2 class="reviews-title" id="reviews-title">reviews.</h2>
+                    <p class="reviews-subtitle">Thought-out, stark, no-nonsense takes on the latest in cinema, carefully curated for an easy digest.</p>
+                </div>
+
+                <div class="review-grid">
+                    <a href="Masato1st.html" class="review-card">
+                        <img src="cleaners/cleaners.jpg" alt="Cleaners" loading="lazy">
+                        <div class="review-card-content">
+                            <div class="review-card-title">Cleaners</div>
+                            <div class="review-card-meta">Masato Martin</div>
+                        </div>
+                    </a>
+                    <a href="Marielle2nd.html" class="review-card">
+                        <img src="poster/glass onion.png" alt="Glass Onion: A Knives Out Mystery" loading="lazy">
+                        <div class="review-card-content">
+                            <div class="review-card-title">Glass Onion: A Knives Out Mystery</div>
+                            <div class="review-card-meta">Marielle Datu</div>
+                        </div>
+                    </a>
+                    <a href="Jasmine3rd.html" class="review-card">
+                        <img src="poster/1.jpg" alt="All About Lily Chou-Chou" loading="lazy">
+                        <div class="review-card-content">
+                            <div class="review-card-title">All About Lily Chou-Chou</div>
+                            <div class="review-card-meta">Jasmine Magtanong</div>
+                        </div>
+                    </a>
+                    <a href="Ivan4th.html" class="review-card">
+                        <img src="poster/Screenshot 2025-07-27 150820.png" alt="Bullet Train" loading="lazy">
+                        <div class="review-card-content">
+                            <div class="review-card-title">Bullet Train</div>
+                            <div class="review-card-meta">Ivan Salamat</div>
+                        </div>
+                    </a>
+                    <a href="Venice5th.html" class="review-card">
+                        <img src="poster/main.PNG" alt="Chronicle" loading="lazy">
+                        <div class="review-card-content">
+                            <div class="review-card-title">Chronicle</div>
+                            <div class="review-card-meta">Venice Ochoa</div>
+                        </div>
+                    </a>
+                    <a href="Claire6th.html" class="review-card">
+                        <img src="poster/Superman-Poster1.jpg" alt="Superman" loading="lazy">
+                        <div class="review-card-content">
+                            <div class="review-card-title">Superman</div>
+                            <div class="review-card-meta">Claire Ochoa</div>
+                        </div>
+                    </a>
+                    <a href="Hans7th.html" class="review-card">
+                        <img src="poster/s3.png" alt="Oppenheimer" loading="lazy">
+                        <div class="review-card-content">
+                            <div class="review-card-title">Oppenheimer</div>
+                            <div class="review-card-meta">Hans Ocampo</div>
+                        </div>
+                    </a>
+                    <a href="Lenon8th.html" class="review-card">
+                        <img src="poster/openseason main.png" alt="Open Season" loading="lazy">
+                        <div class="review-card-content">
+                            <div class="review-card-title">Open Season</div>
+                            <div class="review-card-meta">Danielle Lenon</div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-logo">Cine/score</div>
+            <p class="footer-description">Cine/score is a curated space for film reviews, clean, scored, and focused on what matters most: the movie.</p>
+            <div class="footer-links">
+                <ul>
+                    <li><a href="#reviews-section">Reviews</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="#">Contact</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                </ul>
+            </div>
+            <div class="footer-copyright">&copy; 2025 Cine/score. All rights reserved.</div>
+        </div>
+    </footer>
+
+</body>
+</html>
